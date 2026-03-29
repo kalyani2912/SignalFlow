@@ -2,9 +2,13 @@ import { v4 as uuidv4 } from "uuid";
 import type { Logger } from "pino";
 import type { Signal, SignalIngestionPayload } from "../domain/signal.js";
 import type { Campaign } from "../domain/campaign.js";
+import type { MemoryStore } from "../store/memory-store.js";
 
 export class SignalIngestionService {
-  constructor(private readonly logger: Logger) {}
+  constructor(
+    private readonly logger: Logger,
+    private readonly store: MemoryStore
+  ) {}
 
   async ingest(payload: SignalIngestionPayload): Promise<Signal> {
     const signal: Signal = {
@@ -22,19 +26,20 @@ export class SignalIngestionService {
       "Signal ingested"
     );
 
-    const campaigns = await this.matchCampaigns(signal);
-    if (campaigns.length > 0) {
-      this.logger.info(
-        { signalId: signal.id, matchedCampaigns: campaigns.length },
-        "Campaigns matched"
-      );
-    }
-
     return signal;
   }
 
-  async matchCampaigns(_signal: Signal): Promise<Campaign[]> {
-    // Phase 2: evaluate signal against active campaign trigger rules
-    return [];
+  async matchCampaigns(signal: Signal): Promise<Campaign[]> {
+    const activeCampaigns = await this.store.getActiveCampaigns();
+
+    return activeCampaigns.filter((campaign) =>
+      campaign.triggerRules.some((rule) => {
+        if (rule.signalType !== signal.signalType) return false;
+        if (!rule.conditions) return true;
+        return Object.entries(rule.conditions).every(
+          ([key, value]) => signal.payload[key] === value
+        );
+      })
+    );
   }
 }

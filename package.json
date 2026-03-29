@@ -7,7 +7,10 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
@@ -24,6 +27,9 @@
     "pino-pretty": "^13.0.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.3"
+    "supertest": "^7.0.0",
+    "@types/supertest": "^6.0.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.0"
   }
 }

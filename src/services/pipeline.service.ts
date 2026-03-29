@@ -8,6 +8,7 @@ import type { MessageGenerationService } from "./message-generation.service.js";
 import type { ChannelRegistry } from "../channels/channel-registry.js";
 import type { RateLimiterService } from "./rate-limiter.service.js";
 import type { AnalyticsService } from "./analytics.service.js";
+import type { EventBus } from "./event-bus.service.js";
 
 export interface PipelineResult {
   signal: Signal;
@@ -24,7 +25,8 @@ export class PipelineService {
     private readonly store: MemoryStore,
     private readonly rateLimiter: RateLimiterService,
     private readonly analytics: AnalyticsService,
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    private readonly eventBus?: EventBus
   ) {}
 
   async processSignal(payload: SignalIngestionPayload): Promise<PipelineResult> {
@@ -98,6 +100,8 @@ export class PipelineService {
       "Pipeline completed"
     );
 
-    return { signal, messagesGenerated, deliveries, rateLimited: false };
+    const result: PipelineResult = { signal, messagesGenerated, deliveries, rateLimited: false };
+    this.eventBus?.publishPipelineResult(result);
+    return result;
   }
 }

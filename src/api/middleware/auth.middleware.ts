@@ -3,6 +3,12 @@ import { env } from "../../config/env.js";
 import { logger } from "../../config/logger.js";
 
 export function apiKeyAuth(req: Request, res: Response, next: NextFunction) {
+  // Allow SSE stream and static dashboard without API key
+  if (req.method === "GET" && req.path === "/signals/stream") {
+    next();
+    return;
+  }
+
   const apiKeys = env.API_KEYS;
 
   if (!apiKeys) {

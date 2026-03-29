@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignalFlow — Campaign Detail</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">SignalFlow</a>
+    <div class="tagline">Campaign Detail</div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="campaign-header">
+        <h1 id="camp-name">Loading...</h1>
+        <span id="camp-status"></span>
+      </div>
+      <div class="meta-row">
+        <div><strong>Brand:</strong> <span id="camp-brand"></span></div>
+        <div><strong>Created:</strong> <span id="camp-created"></span></div>
+        <div><strong>Channels:</strong> <span id="camp-channels"></span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Trigger Rules</h2>
+      <pre id="camp-rules" class="code-block"></pre>
+      <div class="tone-section">
+        <strong>Tone Guidelines:</strong>
+        <span id="camp-tone" class="tone-text">Not specified</span>
+      </div>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <div class="card-label">Signals Received</div>
+        <div class="card-value" id="stat-signals">0</div>
+        <div class="bar-wrapper"><div class="bar bar-blue" id="bar-signals"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Messages Sent</div>
+        <div class="card-value" id="stat-messages">0</div>
+        <div class="bar-wrapper"><div class="bar bar-purple" id="bar-messages"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Delivered</div>
+        <div class="card-value" id="stat-success">0</div>
+        <div class="bar-wrapper"><div class="bar bar-green" id="bar-success"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Failed</div>
+        <div class="card-value" id="stat-failure">0</div>
+        <div class="bar-wrapper"><div class="bar bar-red" id="bar-failure"></div></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Messages</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Shopper</th>
+            <th>Channel</th>
+            <th>Status</th>
+            <th>Body</th>
+            <th>Generated</th>
+          </tr>
+        </thead>
+        <tbody id="msg-tbody">
+          <tr><td colspan="5" class="empty">Loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

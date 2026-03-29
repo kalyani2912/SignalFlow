@@ -21,6 +21,12 @@ export class MemoryStore {
     return Array.from(this.signals.values());
   }
 
+  async getSignalsByShopper(shopperId: string): Promise<Signal[]> {
+    return Array.from(this.signals.values()).filter(
+      (s) => s.shopperId === shopperId
+    );
+  }
+
   // Campaigns
   async addCampaign(campaign: Campaign): Promise<Campaign> {
     this.campaigns.set(campaign.id, campaign);

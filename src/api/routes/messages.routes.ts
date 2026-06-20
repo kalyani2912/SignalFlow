@@ -29,7 +29,7 @@ export function createMessageRoutes(store: MemoryStore): Router {
   router.get(
     "/:id",
     asyncHandler(async (req: Request, res: Response) => {
-      const message = await store.getMessage(req.params.id);
+      const message = await store.getMessage(req.params.id as string);
       if (!message) throw new AppError(404, "Message not found");
       res.json(message);
     })

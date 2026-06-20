@@ -1,7 +1,8 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import pinoHttp from "pino-http";
+import _pinoHttp from "pino-http";
+const pinoHttp = _pinoHttp as unknown as typeof _pinoHttp.default;
 import { env } from "./config/env.js";
 import { logger } from "./config/logger.js";
 import { MemoryStore } from "./store/memory-store.js";
@@ -35,10 +36,10 @@ export function createApp() {
   app.use(
     pinoHttp({
       logger,
-      customProps: (_req, res) => ({
-        requestId: res.locals.requestId,
+      customProps: (_req: any, res: any) => ({
+        requestId: res.locals?.requestId,
       }),
-    })
+    } as any)
   );
 
   // Services
@@ -75,7 +76,7 @@ export function createApp() {
   app.use("/api/v1/messages", createMessageRoutes(store));
   app.use("/api/v1/shoppers", createShopperRoutes(store, rateLimiter));
 
-  app.get("/health", (_req, res) => {
+  app.get("/health", (_req: any, res: any) => {
     res.json({ status: "ok", version: "0.1.0" });
   });
 

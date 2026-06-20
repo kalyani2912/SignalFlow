@@ -12,7 +12,7 @@ export function createShopperRoutes(
   router.get(
     "/:id",
     asyncHandler(async (req: Request, res: Response) => {
-      const shopperId = req.params.id;
+      const shopperId = req.params.id as string;
       const [signals, messages] = await Promise.all([
         store.getSignalsByShopper(shopperId),
         store.getMessagesByShopper(shopperId),

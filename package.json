@@ -2,7 +2,9 @@
   "name": "signalflow",
   "version": "0.1.0",
   "description": "AI-Powered Behavioral Messaging for D2C Brands",
+  "type": "module",
   "main": "dist/server.js",
+  "engines": { "node": ">=20" },
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",

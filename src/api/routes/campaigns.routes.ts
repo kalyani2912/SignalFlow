@@ -86,7 +86,8 @@ export function createCampaignRoutes(store: MemoryStore, analytics: AnalyticsSer
   router.get(
     "/:id",
     asyncHandler(async (req: Request, res: Response) => {
-      const campaign = await store.getCampaign(req.params.id);
+      const id = req.params.id as string;
+      const campaign = await store.getCampaign(id);
       if (!campaign) throw new AppError(404, "Campaign not found");
       res.json(campaign);
     })
@@ -101,7 +102,8 @@ export function createCampaignRoutes(store: MemoryStore, analytics: AnalyticsSer
         return;
       }
 
-      const updated = await store.updateCampaign(req.params.id, result.data);
+      const id = req.params.id as string;
+      const updated = await store.updateCampaign(id, result.data);
       if (!updated) throw new AppError(404, "Campaign not found");
       res.json(updated);
     })
@@ -110,9 +112,10 @@ export function createCampaignRoutes(store: MemoryStore, analytics: AnalyticsSer
   router.get(
     "/:id/analytics",
     asyncHandler(async (req: Request, res: Response) => {
-      const campaign = await store.getCampaign(req.params.id);
+      const id = req.params.id as string;
+      const campaign = await store.getCampaign(id);
       if (!campaign) throw new AppError(404, "Campaign not found");
-      res.json(analytics.getStats(req.params.id));
+      res.json(analytics.getStats(id));
     })
   );
 

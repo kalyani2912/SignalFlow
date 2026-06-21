@@ -1,7 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
-import type { MemoryStore } from "../../store/memory-store.js";
+import type { IStore } from "../../store/store.interface.js";
 import type { Campaign } from "../../domain/campaign.js";
 import type { AnalyticsService } from "../../services/analytics.service.js";
 import { asyncHandler, AppError } from "../middleware/error.middleware.js";
@@ -45,7 +45,7 @@ const UpdateCampaignPayload = z.object({
   toneGuidelines: z.string().optional(),
 });
 
-export function createCampaignRoutes(store: MemoryStore, analytics: AnalyticsService): Router {
+export function createCampaignRoutes(store: IStore, analytics: AnalyticsService): Router {
   const router = Router();
 
   router.post(

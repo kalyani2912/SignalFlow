@@ -5,7 +5,9 @@ import _pinoHttp from "pino-http";
 const pinoHttp = _pinoHttp as unknown as typeof _pinoHttp.default;
 import { env } from "./config/env.js";
 import { logger } from "./config/logger.js";
+import type { IStore } from "./store/store.interface.js";
 import { MemoryStore } from "./store/memory-store.js";
+import { PrismaStore } from "./store/prisma-store.js";
 import { SignalIngestionService } from "./services/signal-ingestion.service.js";
 import { MessageGenerationService } from "./services/message-generation.service.js";
 import { ChannelRegistry } from "./channels/channel-registry.js";
@@ -24,7 +26,16 @@ import { createShopperRoutes } from "./api/routes/shoppers.routes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export function createApp() {
+function createStore(): IStore {
+  if (env.DATABASE_URL) {
+    logger.info("Using Prisma store (Neon Postgres)");
+    return new PrismaStore();
+  }
+  logger.info("No DATABASE_URL — using in-memory store");
+  return new MemoryStore();
+}
+
+export function createApp(storeOverride?: IStore) {
   const app = express();
 
   // Static dashboard (before auth)
@@ -43,7 +54,7 @@ export function createApp() {
   );
 
   // Services
-  const store = new MemoryStore();
+  const store = storeOverride ?? createStore();
   const signalService = new SignalIngestionService(logger, store);
   const messageService = new MessageGenerationService(logger);
   const channelRegistry = new ChannelRegistry(logger);

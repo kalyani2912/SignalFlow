@@ -19,6 +19,9 @@ const envSchema = z.object({
   WHATSAPP_API_TOKEN: z.string().optional(),
   INSTAGRAM_API_TOKEN: z.string().optional(),
 
+  // Database
+  DATABASE_URL: z.string().optional(),
+
   // Authentication
   API_KEYS: z.string().optional(),
 

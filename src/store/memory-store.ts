@@ -1,8 +1,9 @@
 import type { Signal } from "../domain/signal.js";
 import type { Campaign } from "../domain/campaign.js";
 import type { Message } from "../domain/message.js";
+import type { IStore } from "./store.interface.js";
 
-export class MemoryStore {
+export class MemoryStore implements IStore {
   private signals = new Map<string, Signal>();
   private campaigns = new Map<string, Campaign>();
   private messages = new Map<string, Message>();

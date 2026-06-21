@@ -2,12 +2,12 @@ import { v4 as uuidv4 } from "uuid";
 import type { Logger } from "pino";
 import type { Signal, SignalIngestionPayload } from "../domain/signal.js";
 import type { Campaign } from "../domain/campaign.js";
-import type { MemoryStore } from "../store/memory-store.js";
+import type { IStore } from "../store/store.interface.js";
 
 export class SignalIngestionService {
   constructor(
     private readonly logger: Logger,
-    private readonly store: MemoryStore
+    private readonly store: IStore
   ) {}
 
   async ingest(payload: SignalIngestionPayload): Promise<Signal> {

@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Signal {
+  id         String   @id
+  shopperId  String
+  signalType String
+  payload    Json     @default("{}")
+  sessionId  String
+  timestamp  String
+  source     String
+  createdAt  DateTime @default(now())
+
+  @@index([shopperId])
+  @@index([signalType])
+}
+
+model Campaign {
+  id              String   @id
+  name            String
+  brandId         String
+  status          String   @default("draft")
+  channels        Json     @default("[]")
+  triggerRules    Json     @default("[]")
+  messageTemplate String?
+  toneGuidelines  String?
+  createdAt       String
+  updatedAt       String
+
+  @@index([status])
+  @@index([brandId])
+}
+
+model Message {
+  id          String  @id
+  campaignId  String
+  shopperId   String
+  channel     String
+  subject     String?
+  body        String
+  generatedAt String
+  status      String  @default("pending")
+  metadata    Json    @default("{}")
+
+  @@index([campaignId])
+  @@index([shopperId])
+}

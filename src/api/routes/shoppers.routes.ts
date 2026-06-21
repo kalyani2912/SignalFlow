@@ -1,10 +1,10 @@
 import { Router, type Request, type Response } from "express";
-import type { MemoryStore } from "../../store/memory-store.js";
+import type { IStore } from "../../store/store.interface.js";
 import type { RateLimiterService } from "../../services/rate-limiter.service.js";
 import { asyncHandler, AppError } from "../middleware/error.middleware.js";
 
 export function createShopperRoutes(
-  store: MemoryStore,
+  store: IStore,
   rateLimiter: RateLimiterService
 ): Router {
   const router = Router();

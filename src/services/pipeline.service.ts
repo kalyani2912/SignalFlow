@@ -2,7 +2,7 @@ import type { Logger } from "pino";
 import type { SignalIngestionPayload } from "../domain/signal.js";
 import type { DeliveryResult } from "../domain/channel.js";
 import type { Signal } from "../domain/signal.js";
-import type { MemoryStore } from "../store/memory-store.js";
+import type { IStore } from "../store/store.interface.js";
 import type { SignalIngestionService } from "./signal-ingestion.service.js";
 import type { MessageGenerationService } from "./message-generation.service.js";
 import type { ChannelRegistry } from "../channels/channel-registry.js";
@@ -22,7 +22,7 @@ export class PipelineService {
     private readonly signalService: SignalIngestionService,
     private readonly messageService: MessageGenerationService,
     private readonly channelRegistry: ChannelRegistry,
-    private readonly store: MemoryStore,
+    private readonly store: IStore,
     private readonly rateLimiter: RateLimiterService,
     private readonly analytics: AnalyticsService,
     private readonly logger: Logger,

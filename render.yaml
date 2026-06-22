@@ -1,0 +1,15 @@
+{
+  "services": [
+    {
+      "type": "web",
+      "runtime": "node",
+      "name": "signalflow",
+      "buildCommand": "npm install && npm run build",
+      "startCommand": "npm start",
+      "envVars": [
+        { "key": "NODE_ENV", "value": "production" },
+        { "key": "PORT", "value": "10000" }
+      ]
+    }
+  ]
+}

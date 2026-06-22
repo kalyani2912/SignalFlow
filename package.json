@@ -11,7 +11,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "render-build": "npm install && npx prisma generate && npm run build",
+    "render-build": "npm install && npx prisma generate && npx prisma db push && npm run build",
     "clean": "rimraf dist",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
